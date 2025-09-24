@@ -4,7 +4,7 @@ import { useParams } from 'react-router-dom';
 import { useCart } from '../pages/CartContext';
 import { toast, ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
-
+import { baseurl } from '../services/services';
 const CategoryPage = () => {
   const { id } = useParams();
   const { addToCart } = useCart();
@@ -12,7 +12,7 @@ const CategoryPage = () => {
   const [quantities, setQuantities] = useState({});
 
   useEffect(() => {
-    axios.get(`http://localhost:7000/category/${id}`)
+    axios.get(`${baseurl}/category/${id}`)
       .then(res => {
         setProducts(res.data);
         const defaultQty = {};
@@ -71,7 +71,7 @@ const CategoryPage = () => {
           <div key={prod._id} className="col-md-3 mb-4">
             <div className="card h-100 shadow-sm">
               <img
-                src={`http://localhost:7000${prod.image}`}
+                src={`${baseurl}/${prod.image}`}
                 className="card-img-top"
                 style={{ height: '200px', objectFit: 'cover' }}
                 alt={prod.title}

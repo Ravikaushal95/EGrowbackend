@@ -1,12 +1,12 @@
 import React, { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
 import axios from 'axios';
-
+import { baseurl } from '../services/services';
 const Home = () => {
   const [categories, setCategories] = useState([]);
 
   useEffect(() => {
-    axios.get('http://localhost:7000/categories')
+    axios.get(`${baseurl}/categories`)
       .then((res) => {
         setCategories(res.data);
       })
@@ -24,7 +24,7 @@ const Home = () => {
             <Link to={`/category/${cat._id}`} className="text-decoration-none text-dark">
               <div className="card shadow-sm h-100">
                 <img
-                  src={`http://localhost:7000${cat.image}`}
+                  src={`${baseurl}/${cat.image}`}
                   alt={cat.name}
                   className="card-img-top"
                   style={{ height: '180px', objectFit: 'cover' }}

@@ -5,6 +5,7 @@ import { yupResolver } from '@hookform/resolvers/yup';
 import axios from 'axios';
 import { useCart } from './CartContext';
 import { useNavigate } from 'react-router-dom';
+import { baseurl } from '../services/services';
 
 const Checkout = () => {
   const { cartItems, setCartItems } = useCart();
@@ -42,7 +43,7 @@ const Checkout = () => {
     };
 
     try {
-      await axios.post('http://localhost:7000/place-order', payload);
+      await axios.post(`${baseurl}/place-order`, payload);
       alert('✅ Order placed successfully!');
       setCartItems([]);
       navigate('/orders');

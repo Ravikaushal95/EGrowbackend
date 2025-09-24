@@ -3,6 +3,7 @@ import axios from 'axios';
 import { useForm } from 'react-hook-form';
 import { yupResolver } from '@hookform/resolvers/yup';
 import * as Yup from 'yup';
+import { baseurl } from '../services/services';
 
 const validationSchema = Yup.object().shape({
   title: Yup.string().required('Title is required'),
@@ -28,7 +29,7 @@ const AddProduct = () => {
   const image = watch('image');
 
   useEffect(() => {
-    axios.get('http://localhost:7000/categories')
+    axios.get(`${baseurl}/categories`)
       .then(res => setCategories(res.data))
       .catch(err => console.error(err));
   }, []);
@@ -42,7 +43,7 @@ const AddProduct = () => {
     formData.append('image', data.image[0]); // File input is array
 
     try {
-      const res = await axios.post('http://localhost:7000/add-product', formData);
+      const res = await axios.post(`${baseurl}/add-product`, formData);
       alert(res.data.message);
     } catch (err) {
       alert('Error adding product');

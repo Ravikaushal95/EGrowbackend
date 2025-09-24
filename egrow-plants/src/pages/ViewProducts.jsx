@@ -1,10 +1,11 @@
 import React, { useEffect, useState } from 'react';
 import axios from 'axios';
+import { baseurl } from '../services/services';
 
 const ViewProducts = () => {
   const [products, setProducts] = useState([]);
   useEffect(() => {
-    axios.get('http://localhost:7000/category/688765e666053715f4d23b3b')
+    axios.get(`${baseurl}/all-products`)
       .then(res => setProducts(res.data))
       .catch(err => console.error(err));
   }, []);
@@ -24,7 +25,7 @@ const ViewProducts = () => {
         <tbody>
           {products.map(prod => (
             <tr key={prod._id}>
-              <td><img src={`http://localhost:7000${prod.image}`} width="60" alt={prod.title} /></td>
+              <td><img src={`${baseurl}/${prod?.image}`} width="60" alt={prod.title} /></td>
               <td>{prod.title}</td>
               <td>₹ {prod.price}</td>
               <td>{prod.categoryId?.name || 'N/A'}</td>

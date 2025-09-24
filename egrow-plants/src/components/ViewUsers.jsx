@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import axios from 'axios';
+import { baseurl } from '../services/services';
 
 const ViewUsers = () => {
   const [users, setUsers] = useState([]);
@@ -9,7 +10,7 @@ const ViewUsers = () => {
 
   // Fetch users
   const fetchUsers = () => {
-    axios.get("http://localhost:7000/admin/users")
+    axios.get(`${baseurl}/admin/users`)
       .then(res => setUsers(res.data.data))
       .catch(err => console.error("Error fetching users:", err));
   };
@@ -23,7 +24,7 @@ const ViewUsers = () => {
     if (!window.confirm("Are you sure you want to delete this user?")) return;
 
     try {
-      await axios.delete(`http://localhost:7000/user/${id}`);
+      await axios.delete(`${baseurl}/user/${id}`);
       setUsers(prev => prev.filter(user => user._id !== id)); // ✅ update UI instantly
     } catch (err) {
       console.error("Delete failed:", err);
@@ -76,7 +77,7 @@ const ViewUsers = () => {
               <td>{indexOfFirstUser + i + 1}</td>
               <td>
                 <img
-                  src={`http://localhost:7000/upload/${u.profile}`}
+                  src={`${baseurl}/upload/${u.profile}`}
                   alt="profile"
                   width="50"
                   height="50"

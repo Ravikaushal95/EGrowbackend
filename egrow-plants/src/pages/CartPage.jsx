@@ -1,6 +1,7 @@
 import React from 'react';
 import { useCart } from './CartContext';
 import { Link } from 'react-router-dom';
+import { baseurl } from '../services/services';
 
 const CartPage = () => {
   const { cartItems, removeFromCart, updateQuantity } = useCart();
@@ -35,7 +36,7 @@ const CartPage = () => {
                 <tr key={item.id || item._id}>
                   <td>
                     <img
-                      src={`http://localhost:7000${item.image}`}
+                      src={`${baseurl}/${item.image}`}
                       alt={item.title}
                       width="60"
                       style={{ objectFit: 'cover' }}

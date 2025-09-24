@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import axios from 'axios';
+import { baseurl } from '../services/services';
 
 const Orders = () => {
   const [orders, setOrders] = useState([]);
@@ -9,7 +10,7 @@ const Orders = () => {
   const email=data.email;
   const fetchOrders = async () => {
     try {
-      const res = await axios.get(`http://localhost:7000/orders?email=${email}`);
+      const res = await axios.get(`${baseurl}/orders?email=${email}`);
       setOrders(res.data);
     } catch (err) {
       console.error('❌ Failed to fetch orders:', err);
@@ -22,7 +23,7 @@ const Orders = () => {
 
   const cancelOrder = async (orderId) => {
     try {
-      const res = await axios.put(`http://localhost:7000/cancel/${orderId}`);
+      const res = await axios.put(`${baseurl}/cancel/${orderId}`);
       alert('❌ Order cancelled');
       fetchOrders(); // refresh list
     } catch (err) {

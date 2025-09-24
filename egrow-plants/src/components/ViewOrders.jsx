@@ -1,11 +1,11 @@
 import React, { useEffect, useState } from 'react';
 import axios from 'axios';
-
+import { baseurl } from '../services/services';
 const OrderTable = () => {
   const [orders, setOrders] = useState([]);
 
   const fetchOrders = () => {
-    axios.get('http://localhost:7000/orders')
+    axios.get(`${baseurl}/orders`)
       .then(res => setOrders(res.data))
       .catch(err => console.error('Failed to load orders', err));
   };
@@ -15,14 +15,14 @@ const OrderTable = () => {
   }, []);
 
   const updateStatus = (id, status) => {
-    axios.put(`http://localhost:7000/order-status/${id}`, { status })
+    axios.put(`${baseurl}/order-status/${id}`, { status })
       .then(() => fetchOrders())
       .catch(err => console.error('Failed to update status', err));
   };
 
   const deleteOrder = (id) => {
     if (window.confirm('Are you sure you want to delete this order?')) {
-      axios.delete(`http://localhost:7000/order/${id}`)
+      axios.delete(`${baseurl}/order/${id}`)
         .then(() => fetchOrders())
         .catch(err => console.error('Failed to delete order', err));
     }
@@ -59,7 +59,7 @@ const OrderTable = () => {
                   {order.items.map(item => (
                     <div key={item.productId?._id}>
                       🪴 <strong>{item.productId?.title}</strong> x {item.quantity}<br />
-                      <img src={`http://localhost:7000${item.productId?.image}`} width="40" alt="product" />
+                      <img src={`${baseurl}${item.productId?.image}`} width="40" alt="product" />
                     </div>
                   ))}
                 </td>

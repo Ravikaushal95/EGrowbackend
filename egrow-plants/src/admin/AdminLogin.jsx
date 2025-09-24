@@ -4,6 +4,7 @@ import { yupResolver } from '@hookform/resolvers/yup';
 import * as Yup from 'yup';
 import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
+import { baseurl } from '../services/services';
 
 const validationSchema = Yup.object().shape({
   email: Yup.string().email('Invalid email').required('Email is required'),
@@ -23,7 +24,7 @@ const AdminLogin = () => {
 
 const onSubmit = async (data) => {
   try {
-    const res = await axios.post('http://localhost:7000/admin-login', data);
+    const res = await axios.post(`${baseurl}/admin-login`, data);
     if (res.data.success) {
       localStorage.setItem("role", "admin");
       localStorage.setItem("data", JSON.stringify(res.data.data));

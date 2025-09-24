@@ -5,6 +5,7 @@ import * as yup from 'yup';
 import axios from 'axios'
 import Swal from 'sweetalert2'
 import { useNavigate } from 'react-router-dom';
+import { baseurl } from '../services/services';
 
 const schema = yup.object().shape({
   name: yup.string().required('Name is required'),
@@ -31,7 +32,7 @@ function Signup() {
     formData.append("password", data.password);
     formData.append("address", data.address);
     formData.append("profile", data.profile[0]);
-    const response = await axios.post("http://localhost:7000/user-register", formData)
+    const response = await axios.post(`${baseurl}/user-register`, formData)
     if (response.data.code == 201) {
       Swal.fire({
         title: "User Registration",

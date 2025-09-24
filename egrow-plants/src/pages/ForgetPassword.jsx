@@ -5,6 +5,7 @@ import { yupResolver } from '@hookform/resolvers/yup';
 import * as yup from 'yup';
 import Swal from 'sweetalert2';
 import { useNavigate, Link } from 'react-router-dom';
+import { baseurl } from '../services/services';
 
 const schema = yup.object().shape({
   email: yup.string().email('Enter a valid email').required('Email is required'),
@@ -39,7 +40,7 @@ const ForgetPassword = () => {
   const onSubmit = async (data) => {
     if (!otpSent) {
       try {
-        await axios.post('http://localhost:7000/send-otp', { email: data.email });
+        await axios.post(`${baseurl}/send-otp`, { email: data.email });
         setOtpSent(true);
         setValue('otpSent', true);
         Swal.fire('OTP Sent', 'Check your email for the OTP.', 'success');
@@ -48,7 +49,7 @@ const ForgetPassword = () => {
       }
     } else {
       try {
-        const res = await axios.post('http://localhost:7000/verify-otp', {
+        const res = await axios.post(`${baseurl}/verify-otp`, {
           email: data.email,
           otp: data.otp,
           newPassword: data.newPassword,

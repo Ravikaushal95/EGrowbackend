@@ -6,6 +6,7 @@ import * as yup from 'yup';
 import axios from 'axios'
 import Swal from 'sweetalert2'
 import { useNavigate } from 'react-router-dom';
+import { baseurl } from '../services/services';
 const schema = yup.object().shape({
   email: yup.string().email('Enter a valid email').required('Email is required'),
   password: yup.string().min(6, 'Password must be at least 6 characters').required('Password is required'),
@@ -18,7 +19,7 @@ function Login() {
     formState: { errors }
   } = useForm({ resolver: yupResolver(schema) });
   const onSubmit = async (data) => {
-    const login = await axios.post("http://localhost:7000/user-login", data)
+    const login = await axios.post(`${baseurl}/user-login`, data)
     if (login.data.code == 200) {
       localStorage.setItem("data", JSON.stringify(login?.data?.data));
       localStorage.setItem("role", "user"); // ✅ Set role

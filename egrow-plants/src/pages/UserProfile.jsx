@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from 'react';
-import axios from 'axios';
+import axios from 'axios'
+import { baseurl } from '../services/services';
 
 const excludedFields = ['password', 'createdAt', 'updatedAt', '__v', '_id', 'profileName'];
 
@@ -19,7 +20,7 @@ const UserProfile = () => {
 
   const fetchOrders = async (email) => {
     try {
-      const res = await axios.get(`http://localhost:7000/orders?email=${email}`);
+      const res = await axios.get(`${baseurl}/orders?email=${email}`);
       if (res.data.success) {
         setOrders(res.data.orders);
       } else {
@@ -32,7 +33,7 @@ const UserProfile = () => {
 
   const cancelOrder = async (orderId) => {
     try {
-      await axios.put(`http://localhost:7000/cancel/${orderId}`);
+      await axios.put(`${baseurl}/cancel/${orderId}`);
       alert('❌ Order cancelled');
       fetchOrders(user.email); // refresh
     } catch (err) {
@@ -58,7 +59,7 @@ const UserProfile = () => {
             <img
               src={
                 user.profile
-                  ? `http://localhost:7000/upload/${user.profile}`
+                  ? `${baseurl}/upload/${user.profile}`
                   : 'https://cdn-icons-png.flaticon.com/512/149/149071.png'
               }
               alt="Profile"

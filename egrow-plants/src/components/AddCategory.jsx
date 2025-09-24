@@ -3,6 +3,8 @@ import axios from 'axios';
 import { useForm } from 'react-hook-form';
 import { yupResolver } from '@hookform/resolvers/yup';
 import * as Yup from 'yup';
+import { baseurl } from '../services/services';
+
 const schema = Yup.object().shape({
   name: Yup.string().required('Category name is required'),
   image: Yup.mixed()
@@ -26,7 +28,7 @@ const AddCategory = () => {
     formData.append('image', data.image[0]); // Only 1 image
 
     try {
-      const res = await axios.post('http://localhost:7000/add-category', formData);
+      const res = await axios.post(`${baseurl}/add-category`, formData);
       if (res.data.success) {
         alert('Category added successfully!');
         reset(); // clear form

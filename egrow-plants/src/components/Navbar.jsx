@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import { FaShoppingCart, FaUserCircle } from 'react-icons/fa';
 import { useCart } from '../pages/CartContext';
+import { baseurl } from '../services/services';
 
 const Navbar = () => {
   const [data, setData] = useState('');
@@ -118,7 +119,7 @@ const Navbar = () => {
               <Link to="/profile" className="nav-link p-0">
                 {data?.profile ? (
                   <img
-                    src={`http://localhost:7000/upload/${data.profile}`}
+                    src={`${baseurl}/upload/${data.profile}`}
                     alt="Profile"
                     className="rounded-circle"
                     style={{

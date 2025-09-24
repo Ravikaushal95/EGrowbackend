@@ -1,11 +1,12 @@
 import React, { useEffect, useState } from 'react';
 import axios from 'axios';
+import { baseurl } from '../services/services';
 
 const ViewCategories = () => {
   const [categories, setCategories] = useState([]);
   const fetchCategories = async () => {
     try {
-      const res = await axios.get('http://localhost:7000/categories');
+      const res = await axios.get(`${baseurl}/categories`);
       if (Array.isArray(res.data)) {
         setCategories(res.data);
       } else {
@@ -21,7 +22,7 @@ const ViewCategories = () => {
     if (!window.confirm("Are you sure you want to delete this category?")) return;
 
     try {
-      const res = await axios.delete(`http://localhost:7000/admin/delete-category/${id}`);
+      const res = await axios.delete(`${baseurl}/admin/delete-category/${id}`);
       if (res.data.success) {
         alert("Category deleted!");
         setCategories(prev => prev.filter(cat => cat._id !== id));
@@ -49,7 +50,7 @@ const ViewCategories = () => {
             <div className="col-md-3 mb-4" key={cat._id}>
               <div className="card shadow-sm">
                 <img
-                  src={`http://localhost:7000${cat.image}`}
+                  src={`${baseurl}/${cat.image}`}
                   alt={cat.name}
                   className="card-img-top"
                   style={{ height: '180px', objectFit: 'cover' }}
